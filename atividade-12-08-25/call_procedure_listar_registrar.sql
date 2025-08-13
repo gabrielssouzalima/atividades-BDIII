@@ -1,0 +1,2 @@
+CALL proc_listar_registrar_cliente('Gabriel Souza Lima', '485.235.555.28', 'Rua Portugal, 280', '11991994746', '2007-10-29');
+CALL proc_listar_registrar_cliente('Maria Perez Loures', '555.223.325.98', 'Rua Alameda Porta, 90', '11967409239', '2005-11-18');
