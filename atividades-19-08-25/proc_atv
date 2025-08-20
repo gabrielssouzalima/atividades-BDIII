@@ -1,0 +1,8 @@
+DELIMITER //
+CREATE PROCEDURE proc_atv()
+BEGIN
+	SELECT alunos.nome, turmas.período, turmas.turma
+	FROM alunos
+	INNER JOIN turmas ON alunos.id_turma = turmas.id
+	WHERE turmas.turma = '3DS' AND turmas.período = 'Noite';
+END //
