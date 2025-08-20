@@ -1,0 +1,30 @@
+CREATE DATABASE IF NOT EXISTS escola;
+USE escola;
+
+CREATE TABLE turmas (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  turma VARCHAR(100),
+  período VARCHAR(100)
+);
+
+CREATE TABLE alunos (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  nome VARCHAR(100),
+  idade INT,
+  id_turma INT,
+  FOREIGN KEY (id_turma) REFERENCES turmas(id)
+);
+
+INSERT INTO turmas(turma, período) VALUES
+('2DS', 'Manhã'),
+('3DS', 'Noite');
+
+INSERT INTO alunos(nome, idade, id_turma) VALUES
+('Gabriel Souza', 17, 1),
+('Fulano Santos', 15, 1),
+('Ciclano Lima', 18, 2),
+('Beltrano Silva', 22, 2),
+('Lúcia Souza', 23, 2), 
+('Pedro Marques', 17, 1);
+
+SELECT * FROM alunos;
