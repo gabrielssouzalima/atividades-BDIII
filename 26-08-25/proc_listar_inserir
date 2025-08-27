@@ -1,0 +1,56 @@
+DELIMITER //
+
+CREATE PROCEDURE inserir_e_listar(
+    IN p_id_curso INT,
+    IN p_nome_curso VARCHAR(100),
+
+    IN p_id_turma INT,
+    IN p_nome_turma VARCHAR(20),
+
+    IN p_id_aluno INT,
+    IN p_nome_aluno VARCHAR(100),
+    IN p_idade INT,
+
+    IN p_id_boletim INT,
+    IN p_nota DECIMAL(4,2),
+
+    OUT p_mensagem VARCHAR(100)
+)
+BEGIN
+    -- Inserir curso
+    IF NOT EXISTS (SELECT * FROM cursos WHERE id = p_id_curso) THEN
+        INSERT INTO cursos (id, nome) VALUES (p_id_curso, p_nome_curso);
+    END IF;
+
+    -- Inserir turma
+    IF NOT EXISTS (SELECT * FROM turmas WHERE id = p_id_turma) THEN
+        INSERT INTO turmas (id, turma, id_curso) VALUES (p_id_turma, p_nome_turma, p_id_curso);
+    END IF;
+
+    -- Inserir aluno
+    IF NOT EXISTS (SELECT * FROM alunos WHERE id_aluno = p_id_aluno) THEN
+        INSERT INTO alunos (id_aluno, nome, idade, id_turma) VALUES (p_id_aluno, p_nome_aluno, p_idade, p_id_turma);
+    END IF;
+
+    -- Inserir boletim
+    IF NOT EXISTS (SELECT * FROM boletim WHERE id = p_id_boletim) THEN
+        INSERT INTO boletim (id, id_curso, id_turma, id_aluno, nota)
+        VALUES (p_id_boletim, p_id_curso, p_id_turma, p_id_aluno, p_nota);
+    END IF;
+
+    SET p_mensagem = 'INSERT REALIZADO!! ';
+
+SELECT 
+    cursos.nome AS curso,
+    turmas.turma,
+    alunos.nome,
+    boletim.nota
+FROM boletim
+INNER JOIN alunos ON boletim.id_aluno = alunos.id_aluno
+INNER JOIN turmas ON boletim.id_turma = turmas.id
+INNER JOIN cursos ON boletim.id_curso = cursos.id
+WHERE turmas.turma = '3DS'
+  AND cursos.nome = 'Técnico em Desenvolvimento de Sistemas';
+END //
+
+DELIMITER ;
